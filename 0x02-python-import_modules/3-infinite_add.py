@@ -11,6 +11,6 @@ def add_arg(argv):
             add += int(argv[i])
             i += 1
         print("{:d}".format(add))
-if __name__ == "__main__":
-    import sys
-    add_arg(sys.argv)
+if  __name__ == "__main__":
+     import sys
+     add_arg(sys.argv)
