@@ -19,11 +19,12 @@ class Square:
     @size.setter
     def size(self, value):
         """ Setting the size of the square """
-        if type(value) is not int:
+        if not isinstance(value, int):
             raise TypeError("size must be an integer")
-        if value < 0:
+        elif value < 0:
             raise ValueError("size must be >= 0")
-        self.__size = value
+        else:
+            self.__size = value
 
     def area(self):
         """area of the square """
@@ -34,5 +35,6 @@ class Square:
         for i in range(0, self.__size):
             for j in range(0, self.__size):
                 print("#", end="")
+            print('')
         if self.__size == 0:
             print("")
