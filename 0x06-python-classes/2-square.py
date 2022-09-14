@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """ define a class squre"""
+
+
 class Square:
     """Represent a Square"""
     def __init__(self, size=0):
@@ -13,4 +15,3 @@ class Square:
             raise ValueError('size must be >= 0')
         else:
             self.__size = sise
-
