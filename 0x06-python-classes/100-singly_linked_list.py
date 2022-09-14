@@ -4,8 +4,6 @@
 
 class Node:
     """Defining Node linked list."""
-
-
     def __init__(self, data, next_node=None):
         """Initialize a new Node.
         Args:
@@ -44,7 +42,6 @@ class SinglyLinkedList:
         """Initalize a new SinglyLinkedList."""
         self.__head = None
 
-
     def sorted_insert(self, value):
         """Insert a new Node to the SinglyLinkedList.
         The node is inserted into the list at the correct
@@ -66,7 +63,6 @@ class SinglyLinkedList:
                 tmp = tmp.next_node
             new.next_node = tmp.next_node
             tmp.next_node = new
-
 
     def __str__(self):
         """Define the print() representation of a SinglyLinkedList."""
