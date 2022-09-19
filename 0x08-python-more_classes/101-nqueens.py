@@ -32,6 +32,7 @@ def checkBoard(board, col):
             board[col] = row
             checkBoard(board, col + 1)
 
+
 if __name__ == "__main__":
     import sys
 
