@@ -73,5 +73,5 @@ class Rectangle:
         """Print a message for del
         Decrement instance when del is called
         """
-        print("Bye rectangle...")
         Rectangle.number_of_instances -= 1
+        print("Bye rectangle...")
