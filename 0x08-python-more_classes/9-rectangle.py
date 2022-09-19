@@ -103,4 +103,4 @@ class Rectangle:
         decrement instance when del is called
         """
         Rectangle.number_of_instances -= 1
-        print("Bye rectangle...)
+        print("Bye rectangle...")
