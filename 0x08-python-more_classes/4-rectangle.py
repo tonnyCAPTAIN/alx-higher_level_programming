@@ -61,7 +61,8 @@ class Rectangle:
         return res
 
     def __repr__(self):
-        """print() or eval() __repr__ method function to return ...Rectangle(width, height)"""
+        """print() or eval() __repr__ method function to return
+        ...Rectangle(width, height)"""
         w = str(self.__width)
         h = str(self.__height)
 
