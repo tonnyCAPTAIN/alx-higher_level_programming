@@ -4,6 +4,7 @@ text_indentation returns "text" in the specified format
 2 newlines after each ['.', '?', ':']
 """
 
+
 def text_indentation(text):
     """prints "text" with 2 newlines after each of these char: ['.', '?', ':']
     checks if "text" is a str
