@@ -2,11 +2,17 @@
 """Function add_attribute"""
 
 
-def add_attribute(a_class, name, value):
-    """Adds new attribute to an object if it's possible"""
+def add_attribute(an_obj, an_attr, a_value):
+    """Checks if an__attr of bvalue a_value can be added to an_obj
+    Arg:
+        an_obj: object to add the attribute to
+        an__attr: name of the attribute
+        a_value: value of the attribute to add
+    """
 
-    cannot_add = {int, str, float, list, dict, tuple, frozenset, type, object}
-    if type(a_class) in cannot_add:
+    if not hasattr(an_obj, '__slots__') and not hasattr(an_obj, '__dict__'):
+        raise TypeError("can't add new attribute")
+    if hasattr(an_obj, '__slots__') and not hasattr(an_obj, an_attr):
         raise TypeError("can't add new attribute")
 
-    a_class.__setattr__(name, value)
+    setattr(an_obj, an_attr, a_value)
