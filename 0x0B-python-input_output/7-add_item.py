@@ -3,19 +3,22 @@
 a Python list, and then save them to a file
 """
 
-from sys import argv
+import sys
+import json
+import os.path
 
+save_to_json_file = __import__("5-save_to_json_file").save_to_json_file
+load_from_json_file = __import__("6-load_from_json_file").load_from_json_file
 
-if __name__ == "__main__":
-    save_to_json_file = __import__('5-save_to_json_file').save_to_json_file
-    load_json = __import__('6-load_from_json_file').load_from_json_file
-    load_from_json_file = load_json
-    filename = "add_item.json"
+my_file = 'add_item.json'
 
-    try:
-        list = load_from_json_file(filename)
-    except:
-        list = []
+my_list = []
 
-    list.extend(argv[1:])
-    save_to_json_file(list, "add_item.json")
+if os.path.exists(my_file) and os.path.getsize(my_file) > 0:
+    my_list = load_from_json_file(my_file)
+
+if len(sys.argv) > 1:
+    for elem in sys.argv[1:]:
+        my_list.append(elem)
+
+save_to_json_file(my_list, my_file)
