@@ -16,7 +16,8 @@ class Student:
         """retrieves a dictionary representation of a Student instance
         with filter"""
 
-        if (type(attrs) == list and all(type(element) == str for element in attrs)):
+        if (type(attrs) == list and 
+                all(type(element) == str for element in attrs)):
             new_dict = {}
             for element in attrs:
                 if element in self.__dict__:
