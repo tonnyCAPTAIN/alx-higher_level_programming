@@ -7,10 +7,11 @@ and returns the number of characters added
 def append_write(filename="", text=""):
     """append text to filename"""
 
-    with open(filename, 'r+') as f:
+    with open(filename, 'W') as f:
         count = 0
-        f = f.write(text)
-        for i in text:
+        j = f.write(text)
+        last_line = j.readline()[-1]
+        for i in last_line:
             count += 1
 
         return count
