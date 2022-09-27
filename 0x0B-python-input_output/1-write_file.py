@@ -4,15 +4,8 @@ and returns the number of characters written
 """
 
 
-def number_of_lines(filename=""):
-    """function returning number of characters
-    in filename
-    """
+def write_file(filename="", text=""):
+    """writes a str i.e text to filename"""
 
-    counter = 0
-    with open(filename, encoding="utf-8") as f:
-        text = f.readlines()
-        for line in text:
-            counter += 1
-
-    return counter
+    with open(filename, 'w') as f:
+        return f.write(text)
