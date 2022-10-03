@@ -83,18 +83,33 @@ class Base:
         list_objs (list): A list of inherited instances.
         """
 
-        csv_file = cls.__name__ + ".csv"
-        with open(csv_file, "w", newline="") as f:
-            if list_objs is None or list_objs == []:
-                f.write("[]")
-            else:
-                if cls.__name__ == "Rectangle":
-                    attr = ["id", "width", "height", "x", "y"]
-                else:
-                    attr = ["id", "size", "x", "y"]
-                w = csv.DictWriter(f, fieldnames=attr)
-                for obj in list_objs:
-                    w.writerow(obj.to_dictionary())
+        
+        from .rectangle import Rectangle
+        from .square import Square
+        listcpy = list_objs.copy()
+        for idx in range(len(listcpy)):
+            listcpy[idx] = listcpy[idx].to_dictionary()
+        if cls is Rectangle:
+            with open("Rectangle.csv", "w") as f:
+                csvwriter = csv.writer(f)
+                for dicty in listcpy:
+                    newlist = []
+                    newlist.append(dicty["id"])
+                    newlist.append(dicty["width"])
+                    newlist.append(dicty["height"])
+                    newlist.append(dicty["x"])
+                    newlist.append(dicty["y"])
+                    csvwriter.writerow(newlist)
+        if cls is Square:
+            with open("Square.csv", "w") as f:
+                csvwriter = csv.writer(f)
+                for dicty in listcpy:
+                    newlist = []
+                    newlist.append(dicty["id"])
+                    newlist.append(dicty["size"])
+                    newlist.append(dicty["x"])
+                    newlist.append(dicty["y"])
+                    csvwriter.writerow(newlist)
 
     @classmethod
     def load_from_file_csv(cls):
@@ -103,20 +118,26 @@ class Base:
         List of classes inheriting from base class.
         """
 
-        try:
-            with open(cls.__name__ + '.csv', 'r',
-                      encoding='utf-8') as my_csv_file:
-                n_list = []
-                file_dict = my_csv_file.read()
-                if file_dict is None or len(file_dict) == 0:
-                    return []
-                file_data = cls.from_json_string(file_dict)
-                for dictionary in file_data:
-                    instance = cls.create(**dictionary)
-                    n_list.append(instance)
-                return n_list
-        except Exception:
-            return []
+        from .rectangle import Rectangle
+        from .square import Square
+        if cls is Rectangle:
+            with open("Rectangle.csv", "r") as f:
+                csvreader = csv.reader(f)
+                retlist = []
+                for row in csvreader:
+                    newrect = Rectangle(int(row[1]), int(row[2]), int(row[3]),
+                                        int(row[4]), row[0])
+                    retlist.append(newrect)
+                return retlist
+        elif cls is Square:
+            with open("Square.csv", "r") as f:
+                csvreader = csv.reader(f)
+                retlist = []
+                for row in csvreader:
+                    newsquare = Square(int(row[1]), int(row[2]),
+                                       int(row[3]), row[0])
+                    retlist.append(newsquare)
+                return retlist
 
     @staticmethod
     def draw(list_rectangles, list_squares):
