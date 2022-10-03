@@ -37,22 +37,27 @@ class Square(Rectangle):
     def update(self, *args, **kwargs):
         """updating the square values"""
 
-        update = ("id", "size", "x", "y")
-        length = len(args)
-        if args:
-            for i in range(length):
-                setattr(self, update[i], args[i])
-        elif not args or update < 1:
+        if len(args):
+            for i, arg in enumerate(args):
+                if i == 0:
+                    self.id = arg
+                elif i == 1:
+                    self.size = arg
+                elif i == 2:
+                    self.x = arg
+                elif i == 3:
+                    self.y = arg
+        else:
             for key, value in kwargs.items():
-                if key in update:
+                if hasattr(self, key) is True:
                     setattr(self, key, value)
 
-        def to_dictionary(self):
+    def to_dictionary(self):
             """dictionary square represetation"""
 
-            return {
-                    'id': self.id,
-                    'x': self.x,
-                    'size': self.width,
-                    'y': self.y
-                    }
+        return {
+                'id': self.id,
+                'x': self.x,
+                'size': self.width,
+                'y': self.y
+                 }
