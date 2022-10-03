@@ -5,7 +5,7 @@ from models.rectangle import Rectangle
 
 
 class Square(Rectangle):
-    """Square class inherit 
+    """Square class inherit
     from Rectangle
     """
 
@@ -32,7 +32,7 @@ class Square(Rectangle):
     def __str__(self):
         """Returns string representation of Square """
         return "[{}] ({}) {}/{} - {}".format(
-                self.__class__.__name__,self.id, self.x, self.y,self.width)
+                self.__class__.__name__, self.id, self.x, self.y, self.width)
 
     def update(self, *args, **kwargs):
         """updating the square values"""
@@ -54,4 +54,5 @@ class Square(Rectangle):
         def to_dictionary(self):
             """dictionary square represetation"""
 
-            return {'id': self.id, 'x': self.x, 'size': self.width, 'y': self.y}
+            return {'id': self.id, 'x': self.x,
+                     'size': self.width, 'y': self.y}
