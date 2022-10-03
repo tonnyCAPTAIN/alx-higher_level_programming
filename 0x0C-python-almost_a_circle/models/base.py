@@ -37,7 +37,7 @@ class Base:
             if list_objs is None:
                 write_file.write("[]")
             else:
-               """Using to_json_string(), and to_dictionary() to format"""
+               # Using to_json_string(), and to_dictionary() to format
                write_file.write(cls.to_json_string(
                    [item.to_dictionary() for item in list_objs]))
 
@@ -111,8 +111,8 @@ class Base:
                 else:
                     attr = ["id", "size", "x", "y"]
                 list_dicts = csv.DictReader(f, fieldnames=attr)
-                list_dicts = [dict([k, int(v)] for k, v in d.items())
-                        for d in list_dicts]
+                list_dicts = [dict([k, int(v)] for k, v in d.items()
+                    for d in list_dicts]
                 return [cls.create(**d) for d in list_dicts]
         except IOError:
             return []
