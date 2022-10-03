@@ -78,66 +78,46 @@ class Base:
 
     @classmethod
     def save_to_file_csv(cls, list_objs):
-        """Serialize a list of instances to a csv file.
+        """Write the CSV serialization of a list of objects to a file.
         Args:
-        list_objs (list): A list of inherited instances.
+            list_objs (list): A list of inherited Base instances.
         """
 
-        
-        from .rectangle import Rectangle
-        from .square import Square
-        listcpy = list_objs.copy()
-        for idx in range(len(listcpy)):
-            listcpy[idx] = listcpy[idx].to_dictionary()
-        if cls is Rectangle:
-            with open("Rectangle.csv", "w") as f:
-                csvwriter = csv.writer(f)
-                for dicty in listcpy:
-                    newlist = []
-                    newlist.append(dicty["id"])
-                    newlist.append(dicty["width"])
-                    newlist.append(dicty["height"])
-                    newlist.append(dicty["x"])
-                    newlist.append(dicty["y"])
-                    csvwriter.writerow(newlist)
-        if cls is Square:
-            with open("Square.csv", "w") as f:
-                csvwriter = csv.writer(f)
-                for dicty in listcpy:
-                    newlist = []
-                    newlist.append(dicty["id"])
-                    newlist.append(dicty["size"])
-                    newlist.append(dicty["x"])
-                    newlist.append(dicty["y"])
-                    csvwriter.writerow(newlist)
+        filename = cls.__name__ + '.csv'
+        with open(filename, 'w', newline='') as csvfile:
+            if list_objs is None or list_objs == []:
+                csvfile.write("[]")
+            else:
+                if cls.__name__ == "Rectangle":
+                    keynames = ["id", "width", "height", "x", "y"]
+                else:
+                    keynames = ["id", "size", "x", "y"]
+                writer = csv.DictWriter(csvfile, fieldnames=keynames)
+                for obj in list_objs:
+                    writer.writerow(obj.to_dictionary())
 
     @classmethod
     def load_from_file_csv(cls):
-        """Deserialize a list of instances from a csv file.
+        """Return a list of classes instantiated from a CSV file.
+        Reads from `<cls.__name__>.csv`.
         Returns:
-        List of classes inheriting from base class.
+            If the file does not exist - an empty list.
+            Otherwise - a list of instantiated classes.
         """
 
-        from .rectangle import Rectangle
-        from .square import Square
-        if cls is Rectangle:
-            with open("Rectangle.csv", "r") as f:
-                csvreader = csv.reader(f)
-                retlist = []
-                for row in csvreader:
-                    newrect = Rectangle(int(row[1]), int(row[2]), int(row[3]),
-                                        int(row[4]), row[0])
-                    retlist.append(newrect)
-                return retlist
-        elif cls is Square:
-            with open("Square.csv", "r") as f:
-                csvreader = csv.reader(f)
-                retlist = []
-                for row in csvreader:
-                    newsquare = Square(int(row[1]), int(row[2]),
-                                       int(row[3]), row[0])
-                    retlist.append(newsquare)
-                return retlist
+        filename = cls.__name__ + '.csv'
+        try:
+            with open(filename, 'r', newline='') as csvfile:
+                if cls.__name__ == "Rectangle":
+                    keynames = ["id", "width", "height", "x", "y"]
+                else:
+                    keynames = ["id", "size", "x", "y"]
+                list_dicts = csv.DictReader(csvfile, fieldnames=keynames)
+                list_dicts = [dict([k, int(v)] for k, v in
+                              d.items()) for d in list_dicts]
+                return [cls.create(**d) for d in list_dicts]
+        except IOError:
+            return []
 
     @staticmethod
     def draw(list_rectangles, list_squares):
