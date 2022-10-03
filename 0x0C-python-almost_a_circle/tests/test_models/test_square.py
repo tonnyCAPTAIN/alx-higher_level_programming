@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-mport io
+import io
 import sys
 import unittest
 from models.base import Base
