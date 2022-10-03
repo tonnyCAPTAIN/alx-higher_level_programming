@@ -34,8 +34,6 @@ class Square(Rectangle):
         return"[Square] ({:d}) {:d}/{:d} - {:d}".format(
             self.id, self.x, self.y, self.width)
 
-     
-
     def update(self, *args, **kwargs):
         """updates multiple attributes"""
         if len(args):
