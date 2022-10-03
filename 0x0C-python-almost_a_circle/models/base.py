@@ -33,13 +33,13 @@ class Base:
     def save_to_file(cls, list_objs):
         """write into a file JSON string"""
 
-        with open(cls.__name__ + ".json", mode="w") as write_file:
+        json_file = cls.__name__ + ".json"
+        with open(json_file, "w") as f:
             if list_objs is None:
-                write_file.write("[]")
+                f.write("[]")
             else:
-# Using to_json_string(), and to_dictionary() to format
-               write_file.write(cls.to_json_string(
-                   [item.to_dictionary() for item in list_objs]))
+                obj_dicts = [obj.to_dictionary() for obj in list_objs]
+                f.write(Base.to_json_string(obj_dicts))
 
     @staticmethod
     def from_json_string(json_string):
@@ -103,18 +103,19 @@ class Base:
         List of classes inheriting from base class.
         """
 
-        csv_file = cls.__name__ + ".csv"
         try:
-            with open(csv_file, "r", newline="") as f:
-                if cls.__name__ == "Rectangle":
-                    attr = ["id", "width", "height", "x", "y"]
-                else:
-                    attr = ["id", "size", "x", "y"]
-                list_dicts = csv.DictReader(f, fieldnames=attr)
-                list_dicts = [dict([k, int(v)] for k, v in d.items())
-                    for d in list_dicts]
-                return [cls.create(**d) for d in list_dicts]
-        except IOError:
+            with open(cls.__name__ + '.csv', 'r',
+                    encoding='utf-8') as my_csv_file:
+                n_list = []
+                file_dict = my_csv_file.read()
+                if file_dict is None or len(file_dict) == 0:
+                    return []
+                file_data = cls.from_json_string(file_dict)
+                for dictionary in file_data:
+                    instance = cls.create(**dictionary)
+                    n_list.append(instance)
+                return n_list
+        except Exception:
             return []
 
     @staticmethod
