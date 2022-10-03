@@ -16,7 +16,7 @@ class Square(Rectangle):
             x is space
             y sis spce
         """
-        super().__init__(width=size, height=size, x=x, y=y, id=id)
+        super().__init__(size, size, x, y, id)
 
     @property
     def size(self):
@@ -37,19 +37,15 @@ class Square(Rectangle):
     def update(self, *args, **kwargs):
         """updating the square values"""
 
-        if len(kwargs) != 0:
-            for k, v in kwargs.items():
-                setattr(self, k, v)
-        elif len(args) != 0:
-            try:
-                self.id = args[0]
-                self.size = args[1]
-                self.x = args[2]
-                self.y = args[3]
-            except IndexError:
-                pass
-        else:
-            print()
+        update = ("id", "size", "x", "y")
+        length = len(args)
+        if args:
+            for i in range(length):
+                setattr(self, update[i], args[i])
+        elif not args or update < 1:
+            for key, value in kwargs.items():
+                if key in update:
+                    setattr(self, key, value)
 
         def to_dictionary(self):
             """dictionary square represetation"""
