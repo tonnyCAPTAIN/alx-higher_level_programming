@@ -37,7 +37,7 @@ class Base:
             if list_objs is None:
                 write_file.write("[]")
             else:
-               # Using to_json_string(), and to_dictionary() to format
+               """Using to_json_string(), and to_dictionary() to format"""
                write_file.write(cls.to_json_string(
                    [item.to_dictionary() for item in list_objs]))
 
@@ -67,7 +67,7 @@ class Base:
         lt = []
         with open(cls.__name__ + ".json", mode="r") as read_file:
             text = read_file.read()
-        #str to list
+        """str to list"""
         text = cls.from_json_string(text)
         for item in text:
             if type(item) == dict:
@@ -95,7 +95,6 @@ class Base:
                 w = csv.DictWriter(f, fieldnames=attr)
                 for obj in list_objs:
                     w.writerow(obj.to_dictionary())
-
 
     @classmethod
     def load_from_file_csv(cls):
