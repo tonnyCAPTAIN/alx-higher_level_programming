@@ -3,6 +3,7 @@
 
 import json
 import csv
+import turtle
 
 
 class Base:
@@ -77,13 +78,45 @@ class Base:
 
     @classmethod
     def save_to_file_csv(cls, list_objs):
-        """save to csv file"""
+        """Serialize a list of instances to a csv file.
+        Args:
+        list_objs (list): A list of inherited instances.
+        """
 
-        lt = [item.to_dictionary() for item in list_objs]
-        with open(cls.__name__ + ".csv", mode="w") as save_file:
-            write_to = csv.DictWriter(save_file, lt[0].keys())
-            write_to.writeheader()
-            write_to.writerows(lt)
+        csv_file = cls.__name__ + ".csv"
+        with open(csv_file, "w", newline="") as f:
+            if list_objs is None or list_objs == []:
+                f.write("[]")
+            else:
+                if cls.__name__ == "Rectangle":
+                    attr = ["id", "width", "height", "x", "y"]
+                else:
+                    attr = ["id", "size", "x", "y"]
+                w = csv.DictWriter(f, fieldnames=attr)
+                for obj in list_objs:
+                    w.writerow(obj.to_dictionary())
+
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """Deserialize a list of instances from a csv file.
+        Returns:
+        List of classes inheriting from base class.
+        """
+
+        csv_file = cls.__name__ + ".csv"
+        try:
+            with open(csv_file, "r", newline="") as f:
+                if cls.__name__ == "Rectangle":
+                    attr = ["id", "width", "height", "x", "y"]
+                else:
+                    attr = ["id", "size", "x", "y"]
+                list_dicts = csv.DictReader(f, fieldnames=attr)
+                list_dicts = [dict([k, int(v)] for k, v in d.items())
+                        for d in list_dicts]
+                return [cls.create(**d) for d in list_dicts]
+        except IOError:
+            return []
 
     @staticmethod
     def draw(list_rectangles, list_squares):
