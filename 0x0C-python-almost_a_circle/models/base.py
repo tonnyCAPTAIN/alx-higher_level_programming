@@ -64,19 +64,14 @@ class Base:
     def load_from_file(cls):
         """return list instances"""
 
-        lt = []
-        with open(cls.__name__ + ".json", mode="r") as read_file:
-            text = read_file.read()
-        """str to list"""
-        text = cls.from_json_string(text)
-        for item in text:
-            if type(item) == dict:
-                lt.append(cls.create(**item))
-            else:
-                lt.append(item)
-        return lt
+        filename = str(cls.__name__) + ".json"
+        try:
+            with open(filename, 'r') as jsonfile:
+                list_dicts = Base.from_json_string(jsonfile.read())
+                return [cls.create(**d) for d in list_dicts]
+        except IOError:
+            return []
 
-    @classmethod
     def save_to_file_csv(cls, list_objs):
         """Write the CSV serialization of a list of objects to a file.
         Args:
