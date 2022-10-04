@@ -1,38 +1,34 @@
 #!/usr/bin/python3
-"""a class Square"""
-
+"""Defines a square class."""
 from models.rectangle import Rectangle
 
 
 class Square(Rectangle):
-    """Square class inherit
-    from Rectangle
-    """
+    """Represent a square."""
 
     def __init__(self, size, x=0, y=0, id=None):
-        """Initializes instance of Square class
-        Attributes:
-            size is the size of the square
-            x is space
-            y sis spce
+        """Initialize a new Square.
+        Args:
+            size (int): The size of the new Square.
+            x (int): The x coordinate of the new Square.
+            y (int): The y coordinate of the new Square.
+            id (int): The identity of the new Square.
         """
+
         super().__init__(size, size, x, y, id)
+
+    def __str__(self):
+        return ('[Square] ({}) {}/{} - {}'.format(self.id, self.x,
+                                                      self.y, self.width))
 
     @property
     def size(self):
-        """Returns the size of the square"""
         return self.width
 
     @size.setter
     def size(self, value):
-        """Sets the size of the square"""
-        size.width = value
-        size.height = value
-
-    def __str__(self):
-        """Returns string representation of Square """
-        return"[Square] ({:d}) {:d}/{:d} - {:d}".format(
-            self.id, self.x, self.y, self.width)
+        self.width = value
+        self.height = value
 
     def update(self, *args, **kwargs):
         """updates multiple attributes"""
@@ -57,6 +53,5 @@ class Square(Rectangle):
                 self.y = kwargs["y"]
 
     def to_dictionary(self):
-        """ Returns the Squares's dict """
-        s_dict = {"id": self.id, "x": self.x, "size": self.size, "y": self.y}
-        return s_dict
+        """Return the dictionary representation of the Square."""
+        return ({"id": self.id, "size": self.width, "x": self.x, "y": self.y})
