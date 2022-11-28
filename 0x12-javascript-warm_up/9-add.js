@@ -1,8 +1,13 @@
 #!/usr/bin/node
+const args = process.argv;
+let A = parseInt(args[2]);
+let B = parseInt(args[3]);
+if (typeof A === 'number' && typeof B === 'number') {
+  console.log(add(A, B));
+} else {
+  console.log('NaN');
+}
 
-
-const num1 = parseInt(process.argv[2]);
-const num2 = parseInt(process.argv[3]);
-const tot = num1 + num2;
-
-console.log(tot);
+function add (a, b) {
+  return (a + b);
+}
