@@ -2,7 +2,7 @@
 """lists all states with a name starting with N"""
 
 import MySQLdb
-from sys impprt argv
+from sys import argv
 
 if __name__ == "__main__":
     con = MySQLdb.connect(
