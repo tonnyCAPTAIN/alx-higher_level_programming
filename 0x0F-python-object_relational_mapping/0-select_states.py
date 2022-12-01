@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Script that lists all states from a database"""
 
-from sys import agrv
+from sys import argv
 import MySQLdb
 
 if __name__ == "__main__":
