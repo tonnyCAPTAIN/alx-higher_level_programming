@@ -3,34 +3,26 @@
 lists all cities of that state, using the database hbtn_0e_4_usa
 """
 
-import MySQLdb
-from sys import argv
-
-def list_cities():
-    if len(sys.argv) == 5:
-        db = MySQLdb.connect(host="localhost",
-                             port=3306,
-                             user=sys.argv[1],
-                             passwd=sys.argv[2],
-                             db=sys.argv[3])
-
-        cur = db.cursor()
-
-        cur.execute("SELECT cities.name FROM cities\
-                    JOIN states ON cities.state_id = states.id\
-                    AND states.name = '{:s}'\
-                    ORDER BY cities.id ASC".format(sys.argv[4]))
-
-        rows = cur.fetchall()
-
-        res = []
-        for i in rows:
-            res.append(i[0])
-
-        print(", ".join(res))
-
-        cur.close()
-        db.close()
-
 if __name__ == "__main__":
-    list_cities()
+
+    import MySQLdb
+    from sys import argv
+
+    cont = 0
+    conect = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                             passwd=argv[2], db=argv[3], charset="utf8")
+    cursor = conect.cursor()
+    cursor.execute("""SELECT cities.id, cities.name, states.name
+    FROM cities
+    LEFT JOIN states ON cities.state_id = states.id
+    ORDER BY cities.id ASC""")
+    query_rows = cursor.fetchall()
+    for row in query_rows:
+        if row[2] == argv[4]:
+            if cont > 0:
+                print(", ", end="")
+            print(row[1], end="")
+            cont = cont + 1
+    print()
+    cursor.close()
+    conect.close()
