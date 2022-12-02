@@ -7,8 +7,7 @@ import MySQLdb
 from sys import argv
 
 def list_cities():
-    """connects to a given mysql database and lists all 'cities' from it"""
-   if len(sys.argv) == 5:
+    if len(sys.argv) == 5:
         db = MySQLdb.connect(host="localhost",
                              port=3306,
                              user=sys.argv[1],
@@ -34,4 +33,4 @@ def list_cities():
         db.close()
 
 if __name__ == "__main__":
-    list_cities() 
+    list_cities()
